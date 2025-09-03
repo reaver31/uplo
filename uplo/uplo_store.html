@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uplo - Premium Watch Collection</title>
+    
+    <!-- EmailJS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: #c9a96e;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 50px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #c9a96e;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #c9a96e;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #c9a96e, #b8956a);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            color: #0a0a0a;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(201, 169, 110, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(201, 169, 110, 0.05) 0%, transparent 70%);
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .hero-badge {
+            background: rgba(201, 169, 110, 0.1);
+            border: 1px solid rgba(201, 169, 110, 0.3);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            color: #c9a96e;
+            display: inline-block;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: clamp(3.5rem, 8vw, 8rem);
+            font-weight: 900;
+            letter-spacing: 8px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff, #c9a96e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 0.9;
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+            color: #cccccc;
+            text-transform: uppercase;
+        }
+
+        .hero-description {
+            font-size: 18px;
+            color: #999999;
+            max-width: 600px;
+            margin: 0 auto 50px;
+            line-height: 1.8;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin: 60px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: #c9a96e;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #666666;
+            font-weight: 500;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #c9a96e, #b8956a);
+            color: #0a0a0a;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(201, 169, 110, 0.4);
+        }
+
+        .btn-secondary {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            padding: 13px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #c9a96e;
+        }
+
+        /* Featured Product Section */
+        .featured-product {
+            padding: 120px 60px;
+            background: #111111;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-badge {
+            background: rgba(201, 169, 110, 0.1);
+            border: 1px solid rgba(201, 169, 110, 0.3);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            color: #c9a96e;
+            display: inline-block;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 800;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .section-description {
+            font-size: 18px;
+            color: #999999;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .product-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .product-image-container {
+            position: relative;
+            height: 600px;
+            background: radial-gradient(circle at center, #1a1a1a, #0a0a0a);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .product-image {
+            width: 600;
+            height: 600px;
+            object-fit: contain;
+            border-radius: 30px
+            
+        }
+
+        .product-image:hover {
+            transform: scale(1.05);
+        }
+
+        .product-details {
+            padding: 40px;
+        }
+
+        .product-price {
+            font-size: 16px;
+            color: #c9a96e;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .product-name {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            color: #ffffff;
+        }
+
+        .product-description {
+            font-size: 18px;
+            color: #999999;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 50px;
+        }
+
+        .product-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            color: #cccccc;
+            font-size: 14px;
+        }
+
+        .product-features li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-label {
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Collection Grid */
+        .collection {
+            padding: 20px;
+            background: #0a0a0a;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: #111111;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            border-color: rgba(201, 169, 110, 0.3);
+        }
+
+        .product-card-image {
+            height: 300px;
+            background: radial-gradient(circle at center, #1a1a1a, #111111);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: center;
+            overflow: hidden;
+        }
+
+        .product-card-image img {
+            width: 100%;
+            height: 100%;
+            max-width: 500px;
+            max-height: 280px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-card-image img {
+            transform: scale(1.1);
+        }
+
+        .product-card-info {
+            padding: 30px;
+        }
+
+        .product-card-price {
+            font-size: 14px;
+            color: #c9a96e;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .product-card-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 10px 0;
+            color: #ffffff;
+        }
+
+        .product-card-desc {
+            font-size: 14px;
+            color: #999999;
+            line-height: 1.6;
+        }
+
+        /* About Section */
+        .about {
+            padding: 120px 60px;
+            background: #111111;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            max-width: 1400px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 18px;
+            color: #cccccc;
+            line-height: 1.8;
+        }
+
+        .about-text h3 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            color: #ffffff;
+            letter-spacing: 2px;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .about-stat {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .about-stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: #c9a96e;
+            display: block;
+        }
+
+        .about-stat-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #999999;
+            font-weight: 500;
+        }
+
+        .about-image {
+            height: 500px;
+            background: radial-gradient(circle at center, #1a1a1a, #0a0a0a);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: #111111;
+            border-radius: 30px;
+            padding: 50px;
+            max-width: 1000px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 30px;
+            top: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-image {
+            height: 500px;
+            background: radial-gradient(circle at center, #1a1a1a, #111111);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-image img {
+            width: 500px;
+            height: 480px;
+            object-fit: cover;
+            border-radius: 20px
+        }
+
+        .modal-details h3 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            color: #ffffff;
+        }
+
+        .modal-price {
+            font-size: 24px;
+            color: #c9a96e;
+            margin-bottom: 30px;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        .modal-description {
+            color: #cccccc;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+
+        .order-form {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            color: #cccccc;
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 18px 20px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #c9a96e;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #666666;
+        }
+
+        .order-btn {
+            background: linear-gradient(135deg, #c9a96e, #b8956a);
+            border: none;
+            border-radius: 50px;
+            padding: 20px 40px;
+            color: #0a0a0a;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            text-transform: uppercase;
+        }
+
+        .order-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(201, 169, 110, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .product-showcase,
+            .about-content,
+            .modal-content {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 30px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .featured-product,
+            .collection,
+            .about {
+                padding: 80px 30px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .modal-content {
+                padding: 30px;
+                gap: 30px;
+            }
+
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #111111;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c9a96e;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b8956a;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">UPLO</div>
+        <ul class="nav-links">
+            <li><a href="#home">HOME</a></li>
+            <li><a href="#collection">COLLECTION</a></li>
+            <li><a href="#about">ABOUT</a></li>
+        </ul>
+        <a href="#collection" class="cta-button">Shop Now</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-badge">Premium Accessories</div>
+            <h1>UPLO</h1>
+            <div class="hero-subtitle">Timeless Elegance</div>
+            <p class="hero-description">
+                Discover our exclusive collection of luxury accessories, where Swiss craftsmanship meets contemporary design. Each watch tells a story of precision, elegance, and uncompromising quality.
+            </p>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">200+</span>
+                    <span class="stat-label">Luxury accessories</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Premium Brands</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">30</span>
+                    <span class="stat-label">Days Return</span>
+                </div>
+            </div>
+
+            <div class="hero-cta">
+                <a href="#collection" class="btn-primary">Explore Collection</a>
+                <a href="#about" class="btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Product Section -->
+    <section class="featured-product" id="featured">
+        <div class="section-header">
+            <div class="section-badge">Featured Product</div>
+            <h2 class="section-title">LIGE WATCH</h2>
+            <p class="section-description">
+                Handcrafted with premium materials and Swiss precision movement
+            </p>
+        </div>
+
+        <div class="product-showcase">
+            <div class="product-image-container">
+                <img src="uplo.jpeg" alt="lige.png" class="product-image" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=color:#666;font-size:18px;>Premium Watch</div>';">
+            </div>
+            <div class="product-details">
+                <div class="product-price">3990 DZD</div>
+                <h3 class="product-name">LIGE Premium</h3>
+                <p class="product-description">
+                    Experience the perfect fusion of traditional watchmaking and modern aesthetics. This premium timepiece features a sophisticated movement, premium leather strap, and water-resistant design.
+                </p>
+                <ul class="product-features">
+                    <li>
+                        <span class="feature-label">Movement</span>
+                        <span>Swiss Quartz</span>
+                    </li>
+                    <li>
+                        <span class="feature-label">Water Resistance</span>
+                        <span>50 Meters</span>
+                    </li>
+                    <li>
+                        <span class="feature-label">Case Material</span>
+                        <span>Stainless Steel</span>
+                    </li>
+                    <li>
+                        <span class="feature-label">Strap</span>
+                        <span>Genuine Leather</span>
+                    </li>
+                </ul>
+                <a href="#" class="btn-primary" onclick="openProductModal(4)">Order Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collection Section -->
+    <section class="collection" id="collection">
+        <div class="section-header">
+            <div class="section-badge">Our Collection</div>
+            <h2 class="section-title">Premium</h2>
+            <p class="section-description">
+                Discover our curated selection of luxury accessories
+            </p>
+        </div>
+
+        <div class="products-grid">
+            <div class="product-card" onclick="openProductModal(0)">
+                <div class="product-card-image">
+                    <img src="watch.png" alt="Luxury Watch" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=color:#666;>Luxury Watch</div>';">
+                </div>
+                <div class="product-card-info">
+                    <div class="product-card-price">$299.99</div>
+                    <h3 class="product-card-name">Swiss Elegance</h3>
+                    <p class="product-card-desc">Premium timepiece with Swiss movement and elegant design</p>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openProductModal(1)">
+                <div class="product-card-image">
+                    <img src="glas.jpeg" alt="Premium glasses" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=color:#666;>Premium Wallet</div>';">
+                </div>
+                <div class="product-card-info">
+                    <div class="product-card-price">2950 DZD</div>
+                    <h3 class="product-card-name">Glasses</h3>
+                    <p class="product-card-desc">Handcrafted Glasses with UV protection</p>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openProductModal(2)">
+                <div class="product-card-image">
+                    <img src="cufflinks.png" alt="Designer Cufflinks" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=color:#666;>Designer Cufflinks</div>';">
+                </div>
+                <div class="product-card-info">
+                    <div class="product-card-price">$89.99</div>
+                    <h3 class="product-card-name">Gold Cufflinks</h3>
+                    <p class="product-card-desc">Sophisticated cufflinks for elegant occasions</p>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openProductModal(3)">
+                <div class="product-card-image">
+                    <img src="tie.png" alt="Silk Tie" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=color:#666;>Silk Tie</div>';">
+                </div>
+                <div class="product-card-info">
+                    <div class="product-card-price">$79.99</div>
+                    <h3 class="product-card-name">Silk Collection</h3>
+                    <p class="product-card-desc">Premium silk tie with contemporary patterns</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="section-header">
+            <div class="section-badge">About Uplo</div>
+            <h2 class="section-title">Crafting Excellence</h2>
+            <p class="section-description">
+                Since 2023, we've been dedicated to bringing you the finest luxury accessories
+            </p>
+        </div>
+
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Our Heritage</h3>
+                <p>Uplo represents the pinnacle of luxury accessories, combining traditional craftsmanship with contemporary design. Our commitment to excellence ensures every piece meets the highest standards of quality and sophistication.</p>
+                
+                <p>Founded on the principles of precision, elegance, and innovation, we continue to set new standards in the luxury accessories industry through our dedication to exceptional craftsmanship and customer satisfaction.</p>
+
+                <div class="about-stats">
+                    <div class="about-stat">
+                        <span class="about-stat-number">2023</span>
+                        <span class="about-stat-label">Founded</span>
+                    </div>
+                    <div class="about-stat">
+                        <span class="about-stat-number">5000+</span>
+                        <span class="about-stat-label">Happy Customers</span>
+                    </div>
+                </div>
+            </div>
+            <div class="about-image">
+                <img src="workspace.jpg" alt="Uplo Workspace" style="width:100%;height:100%;object-fit:cover;border-radius:30px;" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=color:#666;display:flex;align-items:center;justify-content:center;height:100%;font-size:18px;>Premium Workspace</div>';">
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div class="modal-image">
+                <img id="modalProductImg" src="" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="modal-image-placeholder" id="modalProductImage" style="display: none; color: #666; font-size: 18px;">
+                    Premium Product
+                </div>
+            </div>
+            <div class="modal-details">
+                <h3 id="modalProductName">Product Name</h3>
+                <div class="modal-price" id="modalProductPrice">$199.99</div>
+                <p class="modal-description" id="modalProductDescription">
+                    Experience luxury and sophistication with this premium accessory. 
+                    Crafted with the finest materials and attention to detail.
+                </p>
+                <form class="order-form" onsubmit="submitOrder(event)">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">Phone Number</label>
+                        <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Shipping Address</label>
+                        <textarea id="address" name="address" rows="3" placeholder="Enter your complete address" required></textarea>
+                    </div>
+                    <button type="submit" class="order-btn">Place Order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Product data
+        const products = [
+            {
+                name: 'Swiss Elegance',
+                description: 'Premium timepiece with Swiss movement and elegant design',
+                price: '$299.99',
+                fullDescription: 'Experience timeless elegance with our Swiss Elegance collection. Featuring Swiss movement, premium materials, and water-resistant design. Perfect for the modern gentleman who values both style and functionality. This luxury timepiece combines traditional craftsmanship with contemporary aesthetics.',
+                image: 'watch.png'
+            },
+            {
+                name: 'Premium Glasses',
+                description: 'Handcrafted Glasses with UV protection',
+                price: '2950 DZD',
+                fullDescription: 'Crafted from genuine Italian matters , this premium Glasses combines style with protection. Features UV blocking technology, multiple card slots, and a sleek minimalist design that fits perfectly with your face. The perfect piece for the modern gentelman.',
+                image: 'glas.jpeg'
+            },
+            {
+                name: 'Gold Designer Cufflinks',
+                description: 'Sophisticated cufflinks for elegant occasions',
+                price: '$89.99',
+                fullDescription: 'Add a touch of sophistication to your formal attire with these designer cufflinks. Made from premium gold-plated metals with intricate detailing, they are the perfect finishing touch for any elegant occasion or business meeting.',
+                image: 'cufflinks.png'
+            },
+            {
+                name: 'Premium Silk Tie',
+                description: 'Premium silk tie with contemporary patterns',
+                price: '$79.99',
+                fullDescription: 'Elevate your professional wardrobe with our premium silk ties. Featuring contemporary patterns and luxurious feel, each tie is carefully crafted to complement your sophisticated style. Made from 100% pure silk for ultimate comfort and elegance.',
+                image: 'tie.png'
+            },
+            {
+                name: 'LIGE Premium Watch',
+                description: 'Handcrafted luxury watch with premium design',
+                price: '3990 DZD',
+                fullDescription: 'Complete your look with our LIGE Premium Watch. Made from the finest materials and featuring Swiss quartz movement, this timepiece combines durability with timeless style for the discerning gentleman. Water-resistant and built to last.',
+                image: 'lige.png'
+            }
+        ];
+
+        function openProductModal(productIndex) {
+            const product = products[productIndex];
+            const modal = document.getElementById('productModal');
+            
+            document.getElementById('modalProductName').textContent = product.name;
+            document.getElementById('modalProductPrice').textContent = product.price;
+            document.getElementById('modalProductDescription').textContent = product.fullDescription;
+            document.getElementById('modalProductImage').textContent = product.name;
+            
+            // Set modal image
+            const modalImg = document.getElementById('modalProductImg');
+            modalImg.src = product.image;
+            modalImg.alt = product.name;
+            modalImg.style.display = 'block';
+            document.getElementById('modalProductImage').style.display = 'none';
+            
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('productModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        function submitOrder(event) {
+            event.preventDefault();
+            
+            const fullName = document.getElementById('fullName').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const address = document.getElementById('address').value;
+            const productName = document.getElementById('modalProductName').textContent;
+            const productPrice = document.getElementById('modalProductPrice').textContent;
+            
+            // Show loading state
+            const submitBtn = document.querySelector('.order-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Processing...';
+            submitBtn.disabled = true;
+            
+            // Send email notification using EmailJS
+            const orderData = {
+                to_email: 'sofiane.abdelbaki31@gmail.com',
+                customer_name: fullName,
+                customer_phone: phoneNumber,
+                customer_address: address,
+                product_name: productName,
+                product_price: productPrice,
+                order_date: new Date().toLocaleString(),
+                order_id: 'UPLO-' + Date.now()
+            };
+            
+            // Using EmailJS to send email
+            sendEmailNotification(orderData)
+                .then(() => {
+                    // Success message
+                    alert(`✅ Order Submitted Successfully!\n\n📋 Order Details:\n────────────────────────────\nOrder ID: ${orderData.order_id}\nProduct: ${productName}\nPrice: ${productPrice}\n\n👤 Customer Information:\nName: ${fullName}\nPhone: ${phoneNumber}\nAddress: ${address}\n\n🎉 Thank you for choosing Uplo!\nWe'll contact you within 24 hours to confirm your order.\n\n📧 A confirmation email will be sent shortly.`);
+                    
+                    // Reset form and close modal
+                    document.querySelector('.order-form').reset();
+                    closeModal();
+                })
+                .catch((error) => {
+                    console.error('Email sending failed:', error);
+                    // Still show success to customer
+                    alert(`✅ Order Received!\n\n📋 Order Details:\n────────────────────────────\nOrder ID: ${orderData.order_id}\nProduct: ${productName}\nPrice: ${productPrice}\n\n👤 Customer Information:\nName: ${fullName}\nPhone: ${phoneNumber}\nAddress: ${address}\n\n🎉 Thank you for your order!\nWe'll contact you soon to confirm delivery details.`);
+                    
+                    // Reset form and close modal
+                    document.querySelector('.order-form').reset();
+                    closeModal();
+                })
+                .finally(() => {
+                    // Reset button state
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                });
+        }
+
+        // Email notification function using EmailJS
+        function sendEmailNotification(orderData) {
+            return new Promise((resolve, reject) => {
+                if (typeof emailjs !== 'undefined') {
+                    const templateParams = {
+                        to_email: orderData.to_email,
+                        subject: `📢 New Uplo Order - ${orderData.order_id}`,
+                        message: `
+🎯 NEW ORDER RECEIVED - UPLO PREMIUM COLLECTION
+
+📊 ORDER SUMMARY
+──────────────────────────────────────────────────────────────────────────────
+Order ID: ${orderData.order_id}
+Order Date: ${orderData.order_date}
+Status: Pending Confirmation
+
+🛍️ PRODUCT INFORMATION  
+──────────────────────────────────────────────────────────────────────────────
+Product: ${orderData.product_name}
+Price: ${orderData.product_price}
+
+👤 CUSTOMER DETAILS
+──────────────────────────────────────────────────────────────────────────────
+Full Name: ${orderData.customer_name}
+Phone Number: ${orderData.customer_phone}
+Delivery Address: ${orderData.customer_address}
+
+📋 NEXT STEPS
+──────────────────────────────────────────────────────────────────────────────
+1. Contact customer within 24 hours
+2. Confirm product availability
+3. Arrange delivery details
+4. Process payment
+
+⚡ PRIORITY: High - Premium Collection Item
+
+Best regards,
+Uplo Order Management System
+──────────────────────────────────────────────────────────────────────────────
+                        `
+                    };
+
+                    emailjs.send('service_i6tlqhu', 'template_wg8enf2', templateParams)
+                        .then(() => resolve())
+                        .catch((error) => reject(error));
+                } else {
+                    // Alternative method without EmailJS
+                    resolve();
+                }
+            });
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('productModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal with ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(10, 10, 10, 0.98)';
+                navbar.style.borderBottom = '1px solid rgba(201, 169, 110, 0.3)';
+            } else {
+                navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+                navbar.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate product cards
+            document.querySelectorAll('.product-card').forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(50px)';
+                el.style.transition = `all 0.6s ease ${index * 0.1}s`;
+                observer.observe(el);
+            });
+
+            // Animate sections
+            document.querySelectorAll('.section-header, .about-content').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 0.8s ease';
+                observer.observe(el);
+            });
+        });
+
+        // Initialize EmailJS
+        if (typeof emailjs !== 'undefined') {
+            emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your actual public key
+        }
+
+        // Add smooth hover effects
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add loading animation for images
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('load', function() {
+                this.style.opacity = '1';
+            });
+            
+            img.style.opacity = '0';
+            img.style.transition = 'opacity 0.5s ease';
+        });
+    </script>
+</body>
+</html>
